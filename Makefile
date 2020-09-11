@@ -119,9 +119,9 @@ e2e-helm-deploy:
 		kubectl create clusterrolebinding tiller-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default;\
 		./.staging/helm/linux-amd64/helm init --wait --history-max=5;\
 		kubectl -n kube-system wait --for=condition=Ready pod -l name=tiller --timeout=300s;\
-		./.staging/helm/linux-amd64/helm install manifest_staging/charts/gatekeeper --name=gatekeeper --set image.repository=${HELM_REPO} --set image.release=${HELM_RELEASE} --set emitAdmissionEvents=true --set emitAuditEvents=true;\
+		./.staging/helm/linux-amd64/helm install manifest_staging/charts/gatekeeper -n gatekeeper-system --name=gatekeeper --set image.repository=${HELM_REPO} --set image.release=${HELM_RELEASE} --set emitAdmissionEvents=true --set emitAuditEvents=true;\
 	else\
-		./.staging/helm/linux-amd64/helm install manifest_staging/charts/gatekeeper --name-template=gatekeeper --set image.repository=${HELM_REPO} --set image.release=${HELM_RELEASE} --set emitAdmissionEvents=true --set emitAuditEvents=true;\
+		./.staging/helm/linux-amd64/helm install manifest_staging/charts/gatekeeper -n gatekeeper-system --name-template=gatekeeper --set image.repository=${HELM_REPO} --set image.release=${HELM_RELEASE} --set emitAdmissionEvents=true --set emitAuditEvents=true;\
 	fi;
 
 # Build manager binary
